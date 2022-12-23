@@ -1,2 +1,2 @@
 [webservers]
-172.31.13.182 ansible_user=ec2-user 
+172.31.13.182 tomcat_user=ec2-user 
