@@ -10,7 +10,7 @@ pipeline{
     stages{
         stage("Git Checkout"){
             steps{
-                git credentialsId: 'javahome2', url: 'https://https://github.com/Sandeepgoudgandu/myweb.git'
+                git credentialsId: 'javahome1', url: 'https://https://github.com/Sandeepgoudgandu/myweb.git'
             }
         }
         stage("Maven Build"){
@@ -29,7 +29,7 @@ pipeline{
                             type: 'war'
                        ]
                   ], 
-                  credentialsId: 'nexus3', 
+                  credentialsId: 'privatekey', 
                   groupId: 'in.javahome', 
                   nexusUrl: '172.31.32.181:8081', 
                   nexusVersion: 'nexus3', 
@@ -40,7 +40,7 @@ pipeline{
             }
         stage("Execute Ansible"){
             steps{
-                ansiblePlaybook credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'ansible2', inventory: 'dev.in', playbook: 'copy.yml'
+                ansiblePlaybook credentialsId: 'nexus3', disableHostKeyChecking: true, installation: 'ansible2', inventory: 'dev.in', playbook: 'copy.yml'
             }
            
         }
