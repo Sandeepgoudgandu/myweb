@@ -13,9 +13,10 @@ pipeline{
                 git credentialsId: 'javahome2', url: 'https://github.com/Sandeepgoudgandu/myweb.git'
             }
         }
-         stage("Maven Build"){
-            steps{
-                sh "mvn clean sonar:sonar package"
+          stage('Build with Maven') {
+            steps {
+                sh 'mvn --version'
+                sh 'mvn clean install
                 
             }
         }
