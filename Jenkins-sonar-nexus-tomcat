@@ -1,6 +1,7 @@
 pipeline{
     agent any
      tools {
+         git 'Defaultgit'
         maven 'Maven-3.8.7'
     }
     
