@@ -32,9 +32,9 @@
 
     
     - name: Download Tomcat 9.0.70
-           get_url:
-           url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
-           dest: /tmp/apache-tomcat-9.0.70.tar.gz
+      get_url:
+        url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
+        dest: /tmp/apache-tomcat-9.0.70.tar.gz
 
 
     - name: Create Tomcat install directory
