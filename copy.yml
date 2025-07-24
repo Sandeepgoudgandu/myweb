@@ -30,10 +30,12 @@
         shell: /bin/false
         create_home: no
 
-    - name: Download Tomcat {{ tomcat_version }}
-      get_url:
-        url: "https://downloads.apache.org/tomcat/tomcat-9/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
-        dest: "/tmp/apache-tomcat-{{ tomcat_version }}.tar.gz"
+    
+    - name: Download Tomcat 9.0.70
+           get_url:
+           url: https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.70/bin/apache-tomcat-9.0.70.tar.gz
+           dest: /tmp/apache-tomcat-9.0.70.tar.gz
+
 
     - name: Create Tomcat install directory
       file:
