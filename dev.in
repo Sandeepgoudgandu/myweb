@@ -1,2 +1,5 @@
-[webservers]
-172.31.6.40 ansible_user=ec2-user 
+[web]
+ubuntu@43.204.141.212
+
+[app]
+ubuntu@3.111.36.95
