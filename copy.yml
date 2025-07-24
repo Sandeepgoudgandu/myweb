@@ -1,7 +1,19 @@
----
- - hosts: 172.31.6.40
-   tasks:
-     - name: copy the file from local to remote
-       copy:
-         src: target/myweb-8.2.0.war
-         dest: /usr/local/apache-tomcat-9.0.70/webapps
+- name: Deploy WAR to Tomcat
+  hosts: tomcat
+  become: yes
+  tasks:
+    - name: Install Tomcat
+      apt:
+        name: tomcat9
+        state: present
+        update_cache: yes
+
+    - name: Download WAR from Nexus
+      get_url:
+        url: http://13.201.1.201:8081/repository/maven-releases/com/example/app/1.0/app-1.0.war
+        dest: /var/lib/tomcat9/webapps/app.war
+
+    - name: Restart Tomcat
+      service:
+        name: tomcat9
+        state: restarted
