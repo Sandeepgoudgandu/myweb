@@ -1,19 +1,25 @@
-- name: Deploy WAR to Tomcat
+- name: Deploy WAR to Tomcat on Ubuntu
   hosts: all
   become: yes
+  vars:
+    tomcat_webapps: /var/lib/tomcat9/webapps
+
   tasks:
-    - name: Install Tomcat
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Tomcat 9
       apt:
         name: tomcat9
         state: present
-        update_cache: yes
 
     - name: Download WAR from Nexus
       get_url:
         url: http://13.201.1.201:8081/repository/maven-releases/com/example/app/1.0/app-1.0.war
-        dest: /var/lib/tomcat9/webapps/app.war
+        dest: "{{ tomcat_webapps }}/app.war"
 
-    - name: Restart Tomcat
+    - name: Restart Tomcat service
       service:
         name: tomcat9
         state: restarted
