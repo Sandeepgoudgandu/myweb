@@ -1,5 +1,5 @@
 - name: Deploy WAR to Tomcat
-  hosts: tomcat
+  hosts: all
   become: yes
   tasks:
     - name: Install Tomcat
