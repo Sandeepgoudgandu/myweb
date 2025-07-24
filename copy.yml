@@ -105,7 +105,7 @@
         dest: "{{ tomcat_webapps }}/app.war"
         owner: "{{ tomcat_user }}"
         group: "{{ tomcat_group }}"
-        mode: '0644'
+        mode: '0777'
 
     - name: Restart Tomcat
       service:
