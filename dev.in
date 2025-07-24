@@ -1,5 +1,5 @@
 [web]
-ubuntu@43.204.141.212
+43.204.141.212 ansible_user=ubuntu 
 
 [app]
-ubuntu@3.111.36.95
+3.111.36.95 ansible_user=ubuntu 
