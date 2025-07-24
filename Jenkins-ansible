@@ -1,7 +1,7 @@
 pipeline{
     agent any
      tools {
-        maven 'Maven-3.6.1'
+        maven 'Maven-3.8.7'
     }
     
     environment{
@@ -10,7 +10,7 @@ pipeline{
     stages{
         stage("Git Checkout"){
             steps{
-                git credentialsId: 'javahome1', url: 'https://github.com/Sandeepgoudgandu/myweb.git'
+                git credentialsId: 'git-pat', url: 'https://github.com/Sandeepgoudgandu/myweb.git'
             }
         }
         stage("Maven Build"){
@@ -29,12 +29,12 @@ pipeline{
                             type: 'war'
                        ]
                   ], 
-                  credentialsId: 'privatekey', 
+                  credentialsId: 'nexus4', 
                   groupId: 'in.javahome', 
-                  nexusUrl: '172.31.32.181:8081', 
+                  nexusUrl: '13.201.1.201:8081', 
                   nexusVersion: 'nexus3', 
                   protocol: 'http', 
-                  repository: 'sample-releases', 
+                  repository: 'maven-releases', 
                   version: '8.2.0'  
               }
             }
