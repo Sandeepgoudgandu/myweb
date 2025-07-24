@@ -12,7 +12,7 @@
     - name: Install Tomcat 9
       apt:
         name: tomcat9
-        state: present
+        state: latest
 
     - name: Download WAR from Nexus
       get_url:
