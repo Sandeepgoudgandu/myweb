@@ -100,6 +100,7 @@
         enabled: yes
 
     - name: Download WAR from Nexus
+      become: yes
       get_url:
         url: "http://13.201.1.201:8081/repository/maven-releases/in/javahome/myweb/8.2.0/myweb-8.2.0.war"
         dest: "{{ tomcat_webapps }}/app.war"
