@@ -1,5 +1,5 @@
 [web]
-43.204.141.212 ansible_user=ubuntu 
+3.110.221.139 ansible_user=ubuntu 
 
 [app]
-3.111.36.95 ansible_user=ubuntu 
+15.206.84.62 ansible_user=ubuntu 
