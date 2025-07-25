@@ -20,7 +20,7 @@
         }
         .login-box, .dashboard {
             padding: 50px;
-            margin-top: 100px;
+            margin-top: 50px;
         }
         input[type="text"], input[type="password"] {
             padding: 10px;
@@ -42,8 +42,8 @@
             padding: 20px;
         }
         table {
-            margin: 20px auto;
-            width: 80%;
+            margin: 30px auto;
+            width: 90%;
             border-collapse: collapse;
             color: white;
         }
@@ -58,7 +58,7 @@
 </head>
 <body>
     <div class="header">
-        <h1> lokesh Groups of Companies</h1>
+        <h1>Tarun Pothuganti Groups of Companies</h1>
     </div>
 
     <% if (!isLoggedIn) { %>
@@ -73,34 +73,27 @@
     <% } else { %>
         <div class="dashboard">
             <h2>Welcome, <%= username %>!</h2>
-            <p>You are now viewing the company dashboard of Tarun Pothuganti Groups of Companies.</p>
+            <p>Below is an overview of our company’s presence across India.</p>
             <table>
                 <tr>
-                    <th>Company Division</th>
-                    <th>Head</th>
                     <th>Location</th>
+                    <th>Division</th>
+                    <th>Head</th>
+                    <th>Contact</th>
                     <th>Status</th>
                 </tr>
-                <tr>
-                    <td>TPGC Software Solutions</td>
-                    <td>Sandeep Reddy</td>
-                    <td>Hyderabad</td>
-                    <td>Operational</td>
-                </tr>
-                <tr>
-                    <td>TPGC Infrastructure Pvt Ltd</td>
-                    <td>Tarun Pothuganti</td>
-                    <td>Bangalore</td>
-                    <td>Under Expansion</td>
-                </tr>
-                <tr>
-                    <td>TPGC AgroTech</td>
-                    <td>Meghana Rao</td>
-                    <td>Vizag</td>
-                    <td>Running Smoothly</td>
-                </tr>
+                <tr><td>Hyderabad</td><td>Software HQ</td><td>Sandeep Reddy</td><td>040-2222-1000</td><td>Operational</td></tr>
+                <tr><td>Bangalore</td><td>Infrastructure</td><td>Tarun Pothuganti</td><td>080-2000-1100</td><td>Expanding</td></tr>
+                <tr><td>Pune</td><td>R&D Center</td><td>Meghana Rao</td><td>020-3030-2000</td><td>Operational</td></tr>
+                <tr><td>Delhi</td><td>Corporate Office</td><td>Rajiv Verma</td><td>011-4545-3000</td><td>Operational</td></tr>
+                <tr><td>Chennai</td><td>AgroTech Division</td><td>Priya Iyer</td><td>044-3333-4000</td><td>Stable</td></tr>
+                <tr><td>Ahmedabad</td><td>Finance & Auditing</td><td>Manoj Patel</td><td>079-2020-5000</td><td>Operational</td></tr>
+                <tr><td>Kolkata</td><td>Data Center</td><td>Ritika Singh</td><td>033-7070-6000</td><td>Under Setup</td></tr>
+                <tr><td>Lucknow</td><td>Training Hub</td><td>Abhishek Sharma</td><td>0522-8888-7000</td><td>Running</td></tr>
+                <tr><td>Visakhapatnam</td><td>Marine Services</td><td>Anusha Devi</td><td>0891-9999-8000</td><td>Operational</td></tr>
+                <tr><td>Jaipur</td><td>Support Services</td><td>Neha Jain</td><td>0141-5555-9000</td><td>Launching Soon</td></tr>
             </table>
-            <p>📊 You can now manage reports, teams, and analytics from here.</p>
+            <p>💼 Use this dashboard to navigate resources, access HR portals, project timelines, and communication tools.</p>
         </div>
     <% } %>
 </body>
