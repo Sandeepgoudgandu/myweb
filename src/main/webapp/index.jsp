@@ -58,7 +58,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>Tarun Pothuganti Groups of Companies</h1>
+        <h1> lokesh Groups of Companies</h1>
     </div>
 
     <% if (!isLoggedIn) { %>
