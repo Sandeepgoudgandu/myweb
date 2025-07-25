@@ -2,7 +2,8 @@
 <%
     String username = request.getParameter("username");
     String password = request.getParameter("password");
-    boolean isLoggedIn = username != null && password != null;
+
+    boolean isLoggedIn = "tarun".equals(username) && "sandeep".equals(password);
 %>
 <!DOCTYPE html>
 <html>
@@ -40,6 +41,19 @@
             background-color: #002244;
             padding: 20px;
         }
+        table {
+            margin: 20px auto;
+            width: 80%;
+            border-collapse: collapse;
+            color: white;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ffffff66;
+        }
+        th {
+            background-color: #004466;
+        }
     </style>
 </head>
 <body>
@@ -59,10 +73,35 @@
     <% } else { %>
         <div class="dashboard">
             <h2>Welcome, <%= username %>!</h2>
-            <p>You're now logged into the dashboard of Tarun Pothuganti Groups of Companies.</p>
-            <p>Explore analytics, reports, team updates, and more!</p>
+            <p>You are now viewing the company dashboard of Tarun Pothuganti Groups of Companies.</p>
+            <table>
+                <tr>
+                    <th>Company Division</th>
+                    <th>Head</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td>TPGC Software Solutions</td>
+                    <td>Sandeep Reddy</td>
+                    <td>Hyderabad</td>
+                    <td>Operational</td>
+                </tr>
+                <tr>
+                    <td>TPGC Infrastructure Pvt Ltd</td>
+                    <td>Tarun Pothuganti</td>
+                    <td>Bangalore</td>
+                    <td>Under Expansion</td>
+                </tr>
+                <tr>
+                    <td>TPGC AgroTech</td>
+                    <td>Meghana Rao</td>
+                    <td>Vizag</td>
+                    <td>Running Smoothly</td>
+                </tr>
+            </table>
+            <p>📊 You can now manage reports, teams, and analytics from here.</p>
         </div>
     <% } %>
 </body>
 </html>
-
