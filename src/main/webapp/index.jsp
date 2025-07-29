@@ -3,81 +3,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login | OTSi Premium Portal</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Sandeep Group | Login</title>
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            background-color: #f4f7f9;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .login-container {
-            background: #ffffff0f;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.4);
-            width: 100%;
-            max-width: 400px;
+        .login-box {
+            background: #fff;
+            padding: 30px 40px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            width: 350px;
         }
 
-        h2 {
+        .login-box h2 {
             text-align: center;
-            margin-bottom: 30px;
-            font-weight: 600;
+            margin-bottom: 25px;
+            color: #333;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        .login-box input[type="text"],
+        .login-box input[type="password"] {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
             border-radius: 6px;
         }
 
-        input[type="submit"] {
+        .login-box input[type="submit"] {
             width: 100%;
-            padding: 12px;
-            background-color: #00b4db;
+            padding: 10px;
+            background-color: #005bbb;
+            color: #fff;
             border: none;
             border-radius: 6px;
-            color: white;
             font-weight: bold;
             cursor: pointer;
         }
 
-        input[type="submit"]:hover {
-            background-color: #0083b0;
+        .login-box input[type="submit"]:hover {
+            background-color: #004799;
         }
 
-        .ots-link {
+        .branding {
             text-align: center;
-            margin-top: 15px;
+            margin-bottom: 15px;
         }
 
-        .ots-link a {
-            color: #aee;
-            text-decoration: underline;
+        .branding img {
+            max-width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .branding p {
+            font-weight: bold;
+            font-size: 18px;
+            color: #444;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Welcome to OTSi Portal</h2>
-        <form action="LoginServlet" method="post">
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <input type="submit" value="Login" />
-        </form>
-        <div class="ots-link">
-            <a href="https://otsi.com" target="_blank">Visit OTSi Home</a>
-        </div>
-    </div>
-</body>
-</html>
+    <div class="login-box">
+        <div class="branding">
+            <img src="logo.png" alt="Sandeep Group Logo" />
