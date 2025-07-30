@@ -1,77 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Sandeep Group | Login</title>
-    <style>
-        body {
-            background-color: #f4f7f9;
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-box {
-            background: #fff;
-            padding: 30px 40px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            width: 350px;
-        }
-
-        .login-box h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #333;
-        }
-
-        .login-box input[type="text"],
-        .login-box input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        .login-box input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            background-color: #005bbb;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .login-box input[type="submit"]:hover {
-            background-color: #004799;
-        }
-
-        .branding {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .branding img {
-            max-width: 100px;
-            margin-bottom: 10px;
-        }
-
-        .branding p {
-            font-weight: bold;
-            font-size: 18px;
-            color: #444;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Sandeep Goud Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f7f7f7;
+    }
+    .login-card {
+      max-width: 400px;
+      margin: 80px auto;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-box">
-        <div class="branding">
-            <img src="logo.png" alt="Sandeep Group Logo" />
+  <div class="login-card">
+    <div class="brand">Sandeep Goud Enterprises</div>
+    <form action="login.jsp" method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
