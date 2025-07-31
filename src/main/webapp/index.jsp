@@ -84,7 +84,7 @@
         <ul>
             <li><strong>Company Name:</strong> SaiChowdary Tech Pvt. Ltd.</li>
             <li><strong>Industry:</strong> Enterprise IT Solutions</li>
-            <li><strong>Founded:</strong> 2012</li>
+            <li><strong>Founded:</strong> 1980 </li>
             <li><strong>Headquarters:</strong> Hyderabad, India</li>
             <li><strong>Services:</strong> DevOps, Cloud Infrastructure, Software Development</li>
             <li><strong>CEO:</strong> Sandeep Chowdary</li>
