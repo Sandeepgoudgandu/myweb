@@ -20,18 +20,23 @@
             <input type="submit" value="Login" />
         </form>
 <%
-    } else if ("sandeep".equals(username) && "sai".equals(password)) {
+    } else if ("sandeep".equals(username) && "sandeep".equals(password)) {
 %>
-        <h2>Welcome to SaiChowdary Companies</h2>
-        <p><strong>Company Name:</strong> SaiChowdary Tech Pvt. Ltd.</p>
-        <p><strong>Location:</strong> Hyderabad, India</p>
-        <p><strong>Founded:</strong> 2012</p>
-        <p><strong>Core Services:</strong> Cloud Solutions, Enterprise Development, Containerized Deployment</p>
+        <h2>Welcome, Sandeep!</h2>
+        <h3>📊 SaiChowdary Dashboard</h3>
+        <ul>
+            <li><strong>Company Name:</strong> SaiChowdary Tech Pvt. Ltd.</li>
+            <li><strong>Industry:</strong> IT Services & Solutions</li>
+            <li><strong>Headquarters:</strong> Hyderabad, Telangana</li>
+            <li><strong>Founded:</strong> 2012</li>
+            <li><strong>Specialties:</strong> Cloud Solutions, Web Development, DevOps Automation</li>
+            <li><strong>Contact:</strong> info@saichowdary.com</li>
+        </ul>
 <%
     } else {
 %>
-        <h3>Invalid credentials. Please try again.</h3>
-        <a href="saichowdary.jsp">Go back to login</a>
+        <h3>Invalid login. Please try again.</h3>
+        <a href="index.jsp">Back to Login</a>
 <%
     }
 %>
