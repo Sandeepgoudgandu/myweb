@@ -1,65 +1,55 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%
+    String user = request.getParameter("username");
+    String pass = request.getParameter("password");
+
+    boolean loggedIn = "sandeep".equals(user) && "sandeep@15".equals(pass);
+%>
 <html>
 <head>
-    <title>Netflix Login</title>
+    <title>Netflix Mock</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Helvetica Neue', sans-serif;
-            background: url('https://assets.nflxext.com/ffe/siteui/vlv3/0c69c4cd-a1c0-4d3f-92d6-1dc903edac84/aa83a030-c3b6-432e-a7f2-78cf8a609a92/IN-en-20230821-popsignuptwoweeks-perspective_alpha_website_large.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-        }
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.75);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .login-box {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px;
-            border-radius: 8px;
-            width: 300px;
-            text-align: center;
-        }
-        .login-box h2 {
-            margin-bottom: 20px;
-        }
-        .login-box input[type="text"],
-        .login-box input[type="password"] {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 4px;
-        }
-        .login-box input[type="submit"] {
-            width: 95%;
-            padding: 10px;
-            background-color: #e50914;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        body { font-family: Arial; padding:20px; }
+        .movie-card { border:1px solid #ccc; padding:10px; margin:10px; width:200px; float:left; background:#f8f8f8; }
+        .login-box { max-width:300px; margin:auto; border:1px solid #ccc; padding:15px; background:#f0f0f0; }
     </style>
 </head>
 <body>
-<div class="overlay">
+<%
+    if (!loggedIn) {
+%>
+    <h2>Login to Netflix Mock</h2>
     <div class="login-box">
-        <h2>Sign In</h2>
-        <form action="LoginServlet" method="post">
-            <input type="text" name="username" placeholder="Username" required />
-            <input type="password" name="password" placeholder="Password" required />
-            <input type="submit" value="Login" />
+        <form method="post">
+            <label>Username:</label><br>
+            <input type="text" name="username" required><br><br>
+            <label>Password:</label><br>
+            <input type="password" name="password" required><br><br>
+            <input type="submit" value="Login">
         </form>
     </div>
-</div>
+<%
+    } else {
+%>
+    <h1>Welcome, Sandeep!</h1>
+    <h2>Movie Dashboard</h2>
+
+    <div class="movie-card">
+        <h3>Inception</h3>
+        <p>Genre: Sci-Fi | Rating: 8.8</p>
+    </div>
+
+    <div class="movie-card">
+        <h3>Stranger Things</h3>
+        <p>Genre: Horror/Drama | Seasons: 4</p>
+    </div>
+
+    <div class="movie-card">
+        <h3>Breaking Bad</h3>
+        <p>Genre: Crime/Drama | Seasons: 5</p>
+    </div>
+<%
+    }
+%>
 </body>
 </html>
