@@ -3,52 +3,76 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Fiber-Z Internet Portal</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
-        header { background-color: #0073e6; color: white; padding: 20px; text-align: center; }
-        nav { background-color: #333; padding: 10px; }
-        nav a { color: white; margin: 0 15px; text-decoration: none; }
-        main { padding: 20px; }
-        footer { background-color: #0073e6; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%; }
-    </style>
+    <title>Shiva Kiranam Supermarket</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
-<header>
-    <h1>Fiber-Z Internet Portal</h1>
-    <p>Your gateway to high-speed connectivity</p>
-</header>
+<div class="container text-center mt-5">
+    <h1>Welcome to Shiva Kiranam 🛒</h1>
+    <p>Your neighborhood supermarket for fresh groceries and daily essentials.</p>
 
-<nav>
-    <a href="index.jsp">Home</a>
-    <a href="plans.jsp">Plans</a>
-    <a href="support.jsp">Support</a>
-    <a href="login.jsp">Login</a>
-</nav>
+    <!-- Navigation Buttons -->
+    <div class="btn-group mt-4">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#homeModal">Home</button>
+        <button class="btn btn-success" data-toggle="modal" data-target="#productsModal">Products</button>
+        <button class="btn btn-warning" data-toggle="modal" data-target="#offersModal">Offers</button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#contactModal">Contact</button>
+        <button class="btn btn-secondary" data-toggle="modal" data-target="#aboutModal">About Us</button>
+    </div>
+</div>
 
-<main>
-    <h2>Welcome to Fiber-Z</h2>
-    <p>Experience blazing fast internet with our fiber-optic plans tailored for homes and businesses.</p>
+<!-- Home Modal -->
+<div class="modal fade" id="homeModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Home</h5></div>
+    <div class="modal-body">Welcome to Shiva Kiranam! Explore our wide range of groceries and household items.</div>
+  </div></div>
+</div>
 
-    <%
-        String user = (String) session.getAttribute("username");
-        if (user != null) {
-    %>
-        <p>Hello, <strong><%= user %></strong>! <a href="logout.jsp">Logout</a></p>
-    <%
-        } else {
-    %>
-        <p><a href="login.jsp">Login</a> to manage your account and view usage.</p>
-    <%
-        }
-    %>
-</main>
+<!-- Products Modal -->
+<div class="modal fade" id="productsModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Products</h5></div>
+    <div class="modal-body">
+      - Fresh Fruits & Vegetables<br>
+      - Dairy & Bakery<br>
+      - Grains, Pulses & Spices<br>
+      - Household Essentials
+    </div>
+  </div></div>
+</div>
 
-<footer>
-    &copy; 2025 Fiber-Z Internet Services. All rights reserved.
-</footer>
+<!-- Offers Modal -->
+<div class="modal fade" id="offersModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Offers</h5></div>
+    <div class="modal-body">Check out our weekly discounts and combo deals!</div>
+  </div></div>
+</div>
+
+<!-- Contact Modal -->
+<div class="modal fade" id="contactModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">Contact</h5></div>
+    <div class="modal-body">
+      📞 Phone: +91-9876543210<br>
+      📍 Address: Main Road, Serilingampalli, Hyderabad
+    </div>
+  </div></div>
+</div>
+
+<!-- About Modal -->
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title">About Us</h5></div>
+    <div class="modal-body">Shiva Kiranam is a family-run supermarket serving the community since 2005.</div>
+  </div></div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
