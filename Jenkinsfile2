@@ -1,28 +1,83 @@
-node {
-    stage('Git'){
-      git 'https://github.com/javahometech/myweb'    
-      
-      
-      
-      
-      
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven-3.8.7'
+        // ❌ git tool removed
     }
-    
-    stage('Maven Build'){
-      sh 'mvn clean package'   
+
+    environment {
+        SONAR_HOST_URL    = 'http://13.201.42.191:9000'
+        SONAR_PROJECT_KEY = 'myweb'
+        MAVEN_VERSION     = '8.2.0'
+        WAR_FILE          = "target/myweb-${MAVEN_VERSION}.war"
+        NEXUS_REPO_URL    = 'http://3.110.148.190:8081'
     }
-    stage('Archive Artifacts'){
-         archiveArtifacts 'target/myweb.war'
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git credentialsId: 'git-pat',
+                    url: 'https://github.com/Sandeepgoudgandu/myweb.git',
+                    branch: 'main'
+            }
+        }
+
+        stage('SonarQube Analysis & Build') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')
+                ]) {
+                    sh """
+                        mvn clean package sonar:sonar \
+                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONAR_TOKEN}
+                    """
+                }
+            }
+        }
+
+        stage('Upload WAR to Nexus') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '3.110.148.190:8081',
+                    groupId: 'in.javahome',
+                    version: "${MAVEN_VERSION}",
+                    repository: 'maven-releases',
+                    credentialsId: 'nexus3',
+                    artifacts: [
+                        [
+                            artifactId: 'myweb',
+                            classifier: '',
+                            file: "${WAR_FILE}",
+                            type: 'war'
+                        ]
+                    ]
+                )
+            }
+        }
+
+        stage('Deploy To Kubernetes Cluster') {
+            steps {
+                kubernetesDeploy(
+                    configs: 'springBoot.yml',
+                    kubeconfigId: 'KUBERNETES_CLUSTER_CONFIG',
+                    enableConfigSubstitution: true
+                )
+            }
+        }
     }
-    
-    stage('Email'){
-    
-    mail bcc: '', body: '''Thanks,
-Java Home''', cc: '', from: '', replyTo: '', subject: 'Pipeline Demo', to: 'hari.kammana@gmail.com'
 
-
-
-
-
+    post {
+        success {
+            echo "✅ Build, SonarQube, Nexus upload & Kubernetes deployment successful"
+        }
+        failure {
+            echo "❌ Pipeline failed"
+        }
     }
 }
