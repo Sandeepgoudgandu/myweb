@@ -65,18 +65,20 @@ pipeline {
         }
 
         stage('Deploy To Kubernetes Cluster') {
-    steps {
-        withCredentials([
-            file(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')
-        ]) {
-            sh '''
-                export KUBECONFIG=$KUBECONFIG
-                kubectl apply -f springBoot.yml
-                kubectl rollout status deployment/myweb
-            '''
+            steps {
+                withCredentials([
+                    file(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')
+                ]) {
+                    sh '''
+                        export KUBECONFIG=$KUBECONFIG
+                        kubectl apply -f springBoot.yml
+                        kubectl rollout status deployment/myweb
+                    '''
+                }
+            }
         }
     }
-}
+
     post {
         success {
             echo "✅ CI/CD pipeline executed successfully"
