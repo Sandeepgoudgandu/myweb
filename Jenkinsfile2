@@ -62,14 +62,16 @@ pipeline {
                 )
             }
         }
-
-        stage('Deploy To Kubernetes Cluster') {
-            steps {
-                kubernetesDeploy(
-                    configs: 'springBoot.yml',
-                    kubeconfigId: 'KUBERNETES_CLUSTER_CONFIG',
-                    enableConfigSubstitution: true
-                )
+          stage('Deploy To Kubernetes Cluster') {
+      steps {
+        withCredentials([
+            file(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')
+        ]) {
+            sh '''
+                export KUBECONFIG=$KUBECONFIG
+                kubectl apply -f springBoot.yml
+                kubectl rollout status deployment/myweb
+            '''
             }
         }
     }
