@@ -3,6 +3,7 @@ pipeline {
 
     options {
         skipDefaultCheckout(true)
+        timestamps()
     }
 
     tools {
@@ -22,7 +23,7 @@ pipeline {
             steps {
                 git credentialsId: 'git-pat',
                     url: 'https://github.com/Sandeepgoudgandu/myweb.git',
-                    branch: 'master'   // 🔥 FIXED
+                    branch: 'master'
             }
         }
 
@@ -62,23 +63,25 @@ pipeline {
                 )
             }
         }
-          stage('Deploy To Kubernetes Cluster') {
-      steps {
-        withCredentials([
-            file(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')
-        ]) {
-            sh '''
-                export KUBECONFIG=$KUBECONFIG
-                kubectl apply -f springBoot.yml
-                kubectl rollout status deployment/myweb
-            '''
+
+        stage('Deploy To Kubernetes Cluster') {
+            steps {
+                withCredentials([
+                    file(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')
+                ]) {
+                    sh '''
+                        export KUBECONFIG=$KUBECONFIG
+                        kubectl apply -f springBoot.yml
+                        kubectl rollout status deployment/myweb
+                    '''
+                }
             }
         }
     }
 
     post {
         success {
-            echo "✅ Pipeline executed successfully"
+            echo "✅ CI/CD pipeline executed successfully"
         }
         failure {
             echo "❌ Pipeline failed"
