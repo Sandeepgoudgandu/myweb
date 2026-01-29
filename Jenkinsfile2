@@ -1,9 +1,12 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
     tools {
         maven 'Maven-3.8.7'
-        // ❌ git tool removed
     }
 
     environment {
@@ -11,7 +14,6 @@ pipeline {
         SONAR_PROJECT_KEY = 'myweb'
         MAVEN_VERSION     = '8.2.0'
         WAR_FILE          = "target/myweb-${MAVEN_VERSION}.war"
-        NEXUS_REPO_URL    = 'http://3.110.148.190:8081'
     }
 
     stages {
@@ -20,7 +22,7 @@ pipeline {
             steps {
                 git credentialsId: 'git-pat',
                     url: 'https://github.com/Sandeepgoudgandu/myweb.git',
-                    branch: 'main'
+                    branch: 'master'   // 🔥 FIXED
             }
         }
 
@@ -74,7 +76,7 @@ pipeline {
 
     post {
         success {
-            echo "✅ Build, SonarQube, Nexus upload & Kubernetes deployment successful"
+            echo "✅ Pipeline executed successfully"
         }
         failure {
             echo "❌ Pipeline failed"
