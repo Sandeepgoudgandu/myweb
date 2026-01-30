@@ -50,7 +50,7 @@ pipeline {
                     nexusUrl: '172.31.38.99:8081',
                     groupId: 'in.javahome',
                     version: "${MAVEN_VERSION}",
-                    repository: 'maven-releases',
+                    repository: 'sample-releases',
                     credentialsId: 'nexus3',
                     artifacts: [
                         [
