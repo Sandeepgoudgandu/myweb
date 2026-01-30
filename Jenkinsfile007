@@ -13,7 +13,7 @@ pipeline {
     environment {
         SONAR_HOST_URL    = 'http://65.0.4.94:9000'
         SONAR_PROJECT_KEY = 'myweb'
-        VERSION           = '8.2.0'
+        VERSION           = "${BUILD_NUMBER}"          // 🔥 FIXED
         WAR_FILE          = "target/myweb-${VERSION}.war"
         DOCKER_IMAGE      = 'sandeepgoudgandu/spring-boot-mongo'
     }
@@ -110,4 +110,3 @@ pipeline {
         }
     }
 }
-
