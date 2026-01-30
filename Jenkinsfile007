@@ -1,3 +1,113 @@
+pipeline {
+    agent any
 
-pipeline{
+    options {
+        skipDefaultCheckout(true)
+        timestamps()
+    }
+
+    tools {
+        maven 'Maven-3.8.7'
+    }
+
+    environment {
+        SONAR_HOST_URL    = 'http://65.0.4.94:9000'
+        SONAR_PROJECT_KEY = 'myweb'
+        VERSION           = '8.2.0'
+        WAR_FILE          = "target/myweb-${VERSION}.war"
+        DOCKER_IMAGE      = 'sandeepgoudgandu/spring-boot-mongo'
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git credentialsId: 'git-pat',
+                    url: 'https://github.com/Sandeepgoudgandu/myweb.git',
+                    branch: 'master'
+            }
+        }
+
+        stage('SonarQube Analysis & Build') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')
+                ]) {
+                    sh """
+                        mvn clean package sonar:sonar \
+                        -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONAR_TOKEN}
+                    """
+                }
+            }
+        }
+
+        stage('Upload WAR to Nexus') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '43.205.240.147:8081',
+                    groupId: 'in.javahome',
+                    version: "${VERSION}",
+                    repository: 'maven-releases',
+                    credentialsId: 'nexus3',
+                    artifacts: [
+                        [
+                            artifactId: 'myweb',
+                            classifier: '',
+                            file: "${WAR_FILE}",
+                            type: 'war'
+                        ]
+                    ]
+                )
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh """
+                    docker build -t ${DOCKER_IMAGE}:${VERSION} .
+                """
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'DOCKER_HUB_CREDENTIALS', variable: 'DOCKER_HUB_CREDENTIALS')
+                ]) {
+                    sh """
+                        echo ${DOCKER_HUB_CREDENTIALS} | docker login -u sandeepgoudgandu --password-stdin
+                        docker push ${DOCKER_IMAGE}:${VERSION}
+                    """
+                }
+            }
+        }
+
+        stage('Deploy To Kubernetes Cluster') {
+            steps {
+                withCredentials([
+                    file(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')
+                ]) {
+                    sh '''
+                        export KUBECONFIG=$KUBECONFIG
+                        kubectl apply -f springBoot.yml
+                        kubectl rollout status deployment/myweb
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Full CI/CD pipeline executed successfully"
+        }
+        failure {
+            echo "❌ Pipeline failed"
+        }
+    }
+}
 
