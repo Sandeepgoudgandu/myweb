@@ -48,7 +48,7 @@ pipeline {
                 nexusArtifactUploader(
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    nexusUrl: '43.205.240.147:8081',
+                    nexusUrl: '172.31.33.86:8081',
                     groupId: 'in.javahome',
                     version: "${VERSION}",
                     repository: 'maven-releases',
