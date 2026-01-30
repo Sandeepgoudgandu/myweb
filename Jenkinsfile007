@@ -13,7 +13,7 @@ pipeline {
     environment {
         SONAR_HOST_URL    = 'http://65.0.4.94:9000'
         SONAR_PROJECT_KEY = 'myweb'
-        VERSION           = "8.2.0"         // 🔥 FIXED
+        VERSION           = "${BUILD_NUMBER}"   // ✅ FIX
         WAR_FILE          = "target/myweb-${VERSION}.war"
         DOCKER_IMAGE      = 'sandeepgoudgandu/spring-boot-mongo'
     }
@@ -34,7 +34,9 @@ pipeline {
                     string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')
                 ]) {
                     sh """
-                        mvn clean package sonar:sonar \
+                        mvn clean package \
+                        -Drevision=${VERSION} \
+                        sonar:sonar \
                         -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                         -Dsonar.host.url=${SONAR_HOST_URL} \
                         -Dsonar.login=${SONAR_TOKEN}
@@ -50,6 +52,7 @@ pipeline {
                     protocol: 'http',
                     nexusUrl: '172.31.33.86:8081',
                     groupId: 'in.javahome',
+                    version: "${VERSION}",            // ✅ REQUIRED
                     repository: 'sample-releases',
                     credentialsId: 'nexus3',
                     artifacts: [
@@ -66,9 +69,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh """
-                    docker build -t ${DOCKER_IMAGE}:${VERSION} .
-                """
+                sh "docker build -t ${DOCKER_IMAGE}:${VERSION} ."
             }
         }
 
