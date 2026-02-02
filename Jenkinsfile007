@@ -82,13 +82,15 @@ pipeline {
             }
         }
 
+        // 🔥 FIXED KUBERNETES DEPLOY STAGE
         stage('Deploy to Kubernetes') {
             steps {
-                kubernetesDeploy(
-                    configs: 'springBoot.yml',
-                    kubeconfigId: 'KUBERNETES_CLUSTER_CONFIG',
-                    enableConfigSubstitution: true
-                )
+                withCredentials([file(credentialsId: 'KUBERNETES_CLUSTER_CONFIG', variable: 'KUBECONFIG')]) {
+                    sh '''
+                      kubectl apply -f springBoot.yml
+                      kubectl rollout status deployment/myweb-deployment
+                    '''
+                }
             }
         }
     }
@@ -103,15 +105,3 @@ pipeline {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
