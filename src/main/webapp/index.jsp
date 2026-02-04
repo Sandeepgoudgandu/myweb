@@ -2,87 +2,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Shiva Kiranam Supermarket</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<title>Shiva Kiranam Supermarket</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+body { background:#f1f3f6; }
+
+.header {
+  background:#2874f0;
+  padding:10px;
+  color:white;
+}
+
+.product-card {
+  background:white;
+  padding:15px;
+  border-radius:5px;
+  box-shadow:0 0 5px rgba(0,0,0,.1);
+  margin-bottom:20px;
+}
+
+.footer {
+  background:#172337;
+  color:white;
+  padding:20px;
+}
+</style>
 </head>
+
 <body>
 
-<div class="container text-center mt-5">
-    <h1 class="display-4">🛍️ Shiva Kiranam Supermarket</h1>
-    <p class="lead">Fresh groceries, household essentials, and unbeatable offers—right in your neighborhood!</p>
+<!-- HEADER -->
+<div class="header">
+  <div class="container d-flex">
+    <h4 class="mr-4">🛍 Shiva Kiranam</h4>
+    <input class="form-control w-50" placeholder="Search groceries...">
+    <button class="btn btn-warning ml-3">Login</button>
+  </div>
+</div>
 
-    <!-- Navigation Buttons -->
-    <div class="btn-group mt-4">
-        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#homeModal">Home</button>
-        <button class="btn btn-outline-success" data-toggle="modal" data-target="#productsModal">Products</button>
-        <button class="btn btn-outline-warning" data-toggle="modal" data-target="#offersModal">Offers</button>
-        <button class="btn btn-outline-info" data-toggle="modal" data-target="#aboutModal">About Us</button>
-        <button class="btn btn-outline-secondary" data-toggle="modal" data-target="#contactModal">Contact</button>
+<!-- BANNER -->
+<div class="container mt-4">
+  <div class="alert alert-info text-center">
+    🎉 Flat 10% OFF on orders above ₹1000
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="product-card text-center">
+        <h5>Fresh Apples</h5>
+        <p>₹120 / Kg</p>
+        <button class="btn btn-primary btn-sm">Add to Cart</button>
+      </div>
     </div>
-</div>
 
-<!-- Home Modal -->
-<div class="modal fade" id="homeModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header"><h5 class="modal-title">🏠 Home</h5></div>
-    <div class="modal-body">Welcome to Shiva Kiranam! We offer fresh produce, pantry staples, and daily deals to make your shopping easy and affordable.</div>
-  </div></div>
-</div>
-
-<!-- Products Modal -->
-<div class="modal fade" id="productsModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header"><h5 class="modal-title">🛒 Products</h5></div>
-    <div class="modal-body">
-      <ul>
-        <li>Fruits & Vegetables</li>
-        <li>Dairy & Bakery</li>
-        <li>Grains, Pulses & Spices</li>
-        <li>Personal Care & Cleaning</li>
-        <li>Snacks & Beverages</li>
-      </ul>
+    <div class="col-md-3">
+      <div class="product-card text-center">
+        <h5>Basmati Rice</h5>
+        <p>₹90 / Kg</p>
+        <button class="btn btn-primary btn-sm">Add to Cart</button>
+      </div>
     </div>
-  </div></div>
-</div>
 
-<!-- Offers Modal -->
-<div class="modal fade" id="offersModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header"><h5 class="modal-title">🎁 Offers</h5></div>
-    <div class="modal-body">
-      <ul>
-        <li>Buy 1 Get 1 Free on select snacks</li>
-        <li>10% off on purchases above ₹1000</li>
-        <li>Weekend combo deals on fresh produce</li>
-      </ul>
+    <div class="col-md-3">
+      <div class="product-card text-center">
+        <h5>Milk Packet</h5>
+        <p>₹30</p>
+        <button class="btn btn-primary btn-sm">Add to Cart</button>
+      </div>
     </div>
-  </div></div>
-</div>
 
-<!-- About Us Modal -->
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header"><h5 class="modal-title">📖 About Us</h5></div>
-    <div class="modal-body">Shiva Kiranam is a family-run supermarket in Serilingampalli, serving the community with quality products and personalized service since 2005.</div>
-  </div></div>
-</div>
-
-<!-- Contact Modal -->
-<div class="modal fade" id="contactModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog"><div class="modal-content">
-    <div class="modal-header"><h5 class="modal-title">📞 Contact</h5></div>
-    <div class="modal-body">
-      <p>Phone: +91-9876543210</p>
-      <p>Email: support@shivakiranam.in</p>
-      <p>Address: Main Road, Serilingampalli, Hyderabad</p>
+    <div class="col-md-3">
+      <div class="product-card text-center">
+        <h5>Cooking Oil</h5>
+        <p>₹180</p>
+        <button class="btn btn-primary btn-sm">Add to Cart</button>
+      </div>
     </div>
-  </div></div>
+
+  </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FOOTER -->
+<div class="footer mt-5 text-center">
+  <p>📍 Serilingampalli, Hyderabad</p>
+  <p>📞 +91-9876543210 | support@shivakiranam.in</p>
+  <p>© 2026 Shiva Kiranam Supermarket</p>
+</div>
 
 </body>
 </html>
