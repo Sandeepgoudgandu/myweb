@@ -3,31 +3,40 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Shiva Kiranam Supermarket</title>
+<title> sandeep kart</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 <style>
-body { background:#f1f3f6; }
+body{background:#f1f3f6;font-family:Arial;}
 
-.header {
-  background:#2874f0;
-  padding:10px;
-  color:white;
+.header{
+ background:#2874f0;
+ padding:10px;
+ color:white;
 }
 
-.product-card {
-  background:white;
-  padding:15px;
-  border-radius:5px;
-  box-shadow:0 0 5px rgba(0,0,0,.1);
-  margin-bottom:20px;
+.logo{font-size:22px;font-weight:bold;}
+
+.search-box{width:50%;}
+
+.product{
+ background:white;
+ padding:15px;
+ margin:10px 0;
+ text-align:center;
+ box-shadow:0 0 5px rgba(0,0,0,.1);
+ border-radius:5px;
 }
 
-.footer {
-  background:#172337;
-  color:white;
-  padding:20px;
+.footer{
+ background:#172337;
+ color:white;
+ padding:25px;
+ margin-top:40px;
 }
+
+.price{color:green;font-weight:bold;}
 </style>
 </head>
 
@@ -35,64 +44,63 @@ body { background:#f1f3f6; }
 
 <!-- HEADER -->
 <div class="header">
-  <div class="container d-flex">
-    <h4 class="mr-4">🛍 Shiva Kiranam</h4>
-    <input class="form-control w-50" placeholder="Search groceries...">
-    <button class="btn btn-warning ml-3">Login</button>
-  </div>
+ <div class="container d-flex align-items-center">
+   <div class="logo mr-4">Flipkart</div>
+   <input class="form-control search-box" placeholder="Search for products, brands and more">
+   <button class="btn btn-warning ml-3">Login</button>
+ </div>
 </div>
 
-<!-- BANNER -->
-<div class="container mt-4">
-  <div class="alert alert-info text-center">
-    🎉 Flat 10% OFF on orders above ₹1000
-  </div>
+<!-- OFFER BAR -->
+<div class="container mt-3">
+ <div class="alert alert-info text-center">
+   🎉 Big Billion Days – Up to 50% OFF
+ </div>
 </div>
 
 <!-- PRODUCTS -->
 <div class="container">
-  <div class="row">
+ <div class="row">
 
-    <div class="col-md-3">
-      <div class="product-card text-center">
-        <h5>Fresh Apples</h5>
-        <p>₹120 / Kg</p>
-        <button class="btn btn-primary btn-sm">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="product-card text-center">
-        <h5>Basmati Rice</h5>
-        <p>₹90 / Kg</p>
-        <button class="btn btn-primary btn-sm">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="product-card text-center">
-        <h5>Milk Packet</h5>
-        <p>₹30</p>
-        <button class="btn btn-primary btn-sm">Add to Cart</button>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="product-card text-center">
-        <h5>Cooking Oil</h5>
-        <p>₹180</p>
-        <button class="btn btn-primary btn-sm">Add to Cart</button>
-      </div>
-    </div>
-
+  <div class="col-md-3">
+   <div class="product">
+    <h5>iPhone 14</h5>
+    <p class="price">₹59,999</p>
+    <button class="btn btn-primary btn-sm">Add to Cart</button>
+   </div>
   </div>
+
+  <div class="col-md-3">
+   <div class="product">
+    <h5>Smart TV</h5>
+    <p class="price">₹32,999</p>
+    <button class="btn btn-primary btn-sm">Add to Cart</button>
+   </div>
+  </div>
+
+  <div class="col-md-3">
+   <div class="product">
+    <h5>Headphones</h5>
+    <p class="price">₹1,499</p>
+    <button class="btn btn-primary btn-sm">Add to Cart</button>
+   </div>
+  </div>
+
+  <div class="col-md-3">
+   <div class="product">
+    <h5>Running Shoes</h5>
+    <p class="price">₹2,299</p>
+    <button class="btn btn-primary btn-sm">Add to Cart</button>
+   </div>
+  </div>
+
+ </div>
 </div>
 
 <!-- FOOTER -->
-<div class="footer mt-5 text-center">
-  <p>📍 Serilingampalli, Hyderabad</p>
-  <p>📞 +91-9876543210 | support@shivakiranam.in</p>
-  <p>© 2026 Shiva Kiranam Supermarket</p>
+<div class="footer text-center">
+ <p>About | Careers | Help</p>
+ <p>© 2026 Flipkart Clone</p>
 </div>
 
 </body>
