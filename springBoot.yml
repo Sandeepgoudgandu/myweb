@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myweb-deployment
 spec:
-  replicas:3
+  replicas: 2
   selector:
     matchLabels:
       app: springboot
@@ -13,10 +13,10 @@ spec:
         app: springboot
     spec:
       containers:
-      - name: springboot
-        image: sandeepgoudgandu/spring-boot-mongo:latest
-        ports:
-        - containerPort: 8080
+        - name: springboot
+          image: sandeepgoudgandu/spring-boot-mongo:latest
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -27,5 +27,6 @@ spec:
   selector:
     app: springboot
   ports:
-  - port: 80
-    targetPort: 8080
+    - port: 80
+      targetPort: 8080
+
