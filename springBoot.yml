@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: myweb-deployment
 spec:
-  replicas: 3
+  replicas: 15
   selector:
     matchLabels:
       app: springboot
