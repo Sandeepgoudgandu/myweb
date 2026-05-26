@@ -2,8 +2,9 @@ pipeline{
     agent any
 
     tools {
-        maven 'Maven-3.6.1'
-    }
+    maven 'Maven-3.6.1'
+    git 'git'
+}
 
     environment{
         PATH = "/opt/maven3/bin:$PATH"
