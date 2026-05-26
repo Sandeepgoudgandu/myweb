@@ -1,35 +1,149 @@
 pipeline{
     agent any
-    
+
+    tools {
+        maven 'Maven-3.6.1'
+    }
+
     environment{
         PATH = "/opt/maven3/bin:$PATH"
+        SCANNER_HOME = tool 'sonar-scanner'
     }
+
     stages{
+
+        stage("Clean Workspace"){
+            steps{
+                cleanWs()
+            }
+        }
+
         stage("Git Checkout"){
             steps{
-                git credentialsId: 'myjava', url: 'https://github.com/Sandeepgoudgandu/myweb.git'
+                git credentialsId: 'javahome2',
+                url: 'https://github.com/Sandeepgoudgandu/myweb.git'
             }
         }
+
+        stage("SonarQube Analysis"){
+            steps{
+                withSonarQubeEnv('sonar-server') {
+
+                    sh """
+                    mvn clean verify sonar:sonar \
+                    -Dsonar.projectKey=myweb \
+                    -Dsonar.projectName=myweb
+                    """
+                }
+            }
+        }
+
+        stage("Quality Gate"){
+            steps{
+                waitForQualityGate abortPipeline: true
+            }
+        }
+
         stage("Maven Build"){
             steps{
-                sh "mvn clean package"
-                sh "mv target/*.war target/myweb.war"
+                sh "mvn clean package -DskipTests"
             }
         }
-        stage("deploy-dev"){
+
+        stage("OWASP Dependency Check"){
             steps{
-                sshagent(['tomcat-new']) {
-                sh """
-                    scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@172.31.11.216:/home/ec2-user/apache-tomcat-9.0.70/webapps/
-                    
-                    ssh ec2-user@172.31.11.216 /home/ec2-user/apache-tomcat-9.0.70/bin/shutdown.sh
-                    
-                    ssh ec2-user@172.31.11.216 /home/ec2-user/apache-tomcat-9.0.70/bin/startup.sh
-                
-                """
+                dependencyCheck additionalArguments: '--scan ./',
+                odcInstallation: 'DP-Check'
+
+                dependencyCheckPublisher pattern:
+                '**/dependency-check-report.xml'
             }
-            
+        }
+
+        stage('Upload War To Nexus'){
+            steps{
+
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'myweb',
+                        classifier: '',
+                        file: "target/myweb-8.2.0.war",
+                        type: 'war'
+                    ]
+                ],
+                credentialsId: 'nexus3',
+                groupId: 'in.javahome',
+                nexusUrl: '172.31.36.98:8081',
+                nexusVersion: 'nexus3',
+                protocol: 'http',
+                repository: 'sample-releases',
+                version: '8.2.0'
             }
+        }
+
+        stage('Build Docker Image'){
+            steps{
+
+                sh 'docker build -t sandeepgoudgandu/spring-boot-mongo .'
+
+                sh 'docker build -t tomcat:${BUILD_NUMBER} .'
+            }
+        }
+
+        stage('Trivy File System Scan'){
+            steps{
+                sh 'trivy fs . > trivy-fs-report.txt'
+            }
+        }
+
+        stage('Trivy Docker Image Scan'){
+            steps{
+                sh 'trivy image tomcat:${BUILD_NUMBER} > trivy-image-report.txt'
+            }
+        }
+
+        stage('Deploy Container'){
+            steps{
+
+                sh '''
+                docker rm -f vani || true
+                docker run -itd \
+                --name vani \
+                -p 9090:8080 \
+                tomcat:${BUILD_NUMBER}
+                '''
+            }
+        }
+
+        stage('Push Docker Image'){
+            steps{
+
+                withCredentials([
+                    string(
+                        credentialsId: 'DOCKER_HUB_CREDENTIALS1',
+                        variable: 'DOCKER_HUB_CREDENTIALS'
+                    )
+                ]) {
+
+                    sh """
+                    docker login -u sandeepgoudgandu \
+                    -p ${DOCKER_HUB_CREDENTIALS}
+                    """
+
+                    sh 'docker push sandeepgoudgandu/spring-boot-mongo'
+                }
+            }
+        }
+    }
+
+    post{
+
+        success{
+            echo 'DevSecOps Pipeline Executed Successfully'
+        }
+
+        failure{
+            echo 'Pipeline Failed'
         }
     }
 }
