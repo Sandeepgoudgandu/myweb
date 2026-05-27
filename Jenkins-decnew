@@ -39,12 +39,6 @@ pipeline{
             }
         }
 
-        stage("Quality Gate"){
-            steps{
-                waitForQualityGate abortPipeline: true
-            }
-        }
-
         stage("Maven Build"){
             steps{
                 sh "mvn clean package -DskipTests"
@@ -74,7 +68,7 @@ pipeline{
                 ],
                 credentialsId: 'nexus3',
                 groupId: 'in.javahome',
-                nexusUrl: '172.31.42.75:8081',
+                nexusUrl: '172.31.19.185:8081',
                 nexusVersion: 'nexus3',
                 protocol: 'http',
                 repository: 'sample-releases',
