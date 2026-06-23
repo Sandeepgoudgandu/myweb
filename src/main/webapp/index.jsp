@@ -1,169 +1,176 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Sandeep Kart</title>
+    <title>Employee Self Service Portal</title>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<style>
-body{background:#f1f3f6;font-family:Arial;}
-.header{background:#2874f0;padding:10px;color:white;}
-.logo{font-size:22px;font-weight:bold;}
-.search-box{width:50%;}
-.product{background:white;padding:15px;margin:10px 0;text-align:center;box-shadow:0 0 5px rgba(0,0,0,.1);border-radius:5px;}
-.footer{background:#172337;color:white;padding:25px;margin-top:40px;}
-.price{color:green;font-weight:bold;}
-</style>
+    <style>
+        body{
+            background:#f5f7fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .header{
+            background:#07456c;
+            color:white;
+            padding:15px;
+        }
+
+        .logo{
+            font-size:28px;
+            font-weight:bold;
+        }
+
+        .navbar-custom{
+            background:#0b5d8f;
+        }
+
+        .navbar-custom a{
+            color:white !important;
+        }
+
+        .card-header{
+            background:#07456c;
+            color:white;
+        }
+
+        .footer{
+            background:#07456c;
+            color:white;
+            text-align:center;
+            padding:15px;
+            margin-top:30px;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
+<!-- Header -->
 <div class="header">
-<div class="container d-flex align-items-center">
-<div class="logo mr-4">Sandeep Kart</div>
-
-<input class="form-control search-box" placeholder="Search products" data-toggle="modal" data-target="#searchModal">
-
-<button class="btn btn-warning ml-3" data-toggle="modal" data-target="#loginModal">Login</button>
-</div>
-</div>
-
-<!-- OFFER -->
-<div class="container mt-3">
-<div class="alert alert-info text-center">
-🎉 Big Sale – Up to 50% OFF
-</div>
+    <div class="container-fluid d-flex justify-content-between">
+        <div class="logo">OTSI Portal</div>
+        <div>
+            Welcome, <%= request.getRemoteUser() == null ? "Employee" : request.getRemoteUser() %>
+        </div>
+    </div>
 </div>
 
-<!-- PRODUCTS -->
-<div class="container">
-<div class="row">
+<!-- Menu -->
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Home</a>
+            </li>
 
-<div class="col-md-3">
-<div class="product">
-<h5>iPhone 14</h5>
-<p class="price">₹59,999</p>
-<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#cartModal">Add to Cart</button>
-</div>
-</div>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Leave Request</a>
+            </li>
 
-<div class="col-md-3">
-<div class="product">
-<h5>Smart TV</h5>
-<p class="price">₹32,999</p>
-<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#cartModal">Add to Cart</button>
-</div>
-</div>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Timesheet</a>
+            </li>
 
-<div class="col-md-3">
-<div class="product">
-<h5>Headphones</h5>
-<p class="price">₹1,499</p>
-<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#cartModal">Add to Cart</button>
-</div>
-</div>
+            <li class="nav-item">
+                <a class="nav-link" href="#">IT Helpdesk</a>
+            </li>
 
-<div class="col-md-3">
-<div class="product">
-<h5>Shoes</h5>
-<p class="price">₹2,299</p>
-<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#cartModal">Add to Cart</button>
-</div>
-</div>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Learning</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-</div>
-</div>
+<div class="container mt-4">
 
-<!-- SEARCH MODAL -->
-<div class="modal fade" id="searchModal">
-<div class="modal-dialog">
-<div class="modal-content">
+    <div class="row">
 
-<div class="modal-header">
-<h4>Search</h4>
-<button class="close" data-dismiss="modal">&times;</button>
-</div>
+        <!-- Left Side -->
+        <div class="col-md-8">
 
-<div class="modal-body">
-<input class="form-control" placeholder="Type product name">
-<button class="btn btn-primary btn-block mt-2">Search</button>
-</div>
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h2>Employee Self Service Portal</h2>
+                    <p>Welcome to Employee Self Service Portal</p>
+                </div>
+            </div>
 
-</div>
-</div>
-</div>
+            <div class="accordion" id="downloadsAccordion">
 
-<!-- LOGIN MODAL -->
-<div class="modal fade" id="loginModal">
-<div class="modal-dialog">
-<div class="modal-content">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#downloads">
+                            Downloads
+                        </button>
+                    </h2>
 
-<div class="modal-header">
-<h4>Login</h4>
-<button class="close" data-dismiss="modal">&times;</button>
-</div>
+                    <div id="downloads"
+                         class="accordion-collapse collapse show">
 
-<div class="modal-body">
-<input class="form-control mb-2" placeholder="Email">
-<input type="password" class="form-control mb-2" placeholder="Password">
-<button class="btn btn-primary btn-block">Login</button>
+                        <div class="accordion-body">
 
-<p class="text-center mt-2">
-<a href="#" data-toggle="modal" data-target="#signupModal" data-dismiss="modal">Create Account</a>
-</p>
+                            <ul>
+                                <li><a href="#">Employee Handbook</a></li>
+                                <li><a href="#">Holiday Calendar</a></li>
+                                <li><a href="#">Health Insurance</a></li>
+                                <li><a href="#">Orientation Guide</a></li>
+                            </ul>
 
-</div>
-</div>
-</div>
-</div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- SIGNUP MODAL -->
-<div class="modal fade" id="signupModal">
-<div class="modal-dialog">
-<div class="modal-content">
+            </div>
 
-<div class="modal-header">
-<h4>Sign Up</h4>
-<button class="close" data-dismiss="modal">&times;</button>
-</div>
+        </div>
 
-<div class="modal-body">
-<input class="form-control mb-2" placeholder="Name">
-<input class="form-control mb-2" placeholder="Email">
-<input type="password" class="form-control mb-2" placeholder="Password">
-<button class="btn btn-success btn-block">Register</button>
-</div>
+        <!-- Right Side -->
+        <div class="col-md-4">
 
-</div>
-</div>
-</div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    Quick Links
+                </div>
 
-<!-- CART MODAL -->
-<div class="modal fade" id="cartModal">
-<div class="modal-dialog modal-sm">
-<div class="modal-content text-center">
+                <div class="card-body">
 
-<div class="modal-body">
-<h5>✅ Added to Cart</h5>
-<button class="btn btn-success" data-dismiss="modal">OK</button>
-</div>
+                    <ul>
+                        <li><a href="#">Apply Leave</a></li>
+                        <li><a href="#">Submit Timesheet</a></li>
+                        <li><a href="#">Raise Ticket</a></li>
+                        <li><a href="#">View Payslip</a></li>
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    Announcements
+                </div>
+
+                <div class="card-body">
+                    Welcome to Employee Portal.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
-</div>
+
+<div class="footer">
+    © 2026 Employee Self Service Portal
 </div>
 
-<!-- FOOTER -->
-<div class="footer text-center">
-<p>About | Careers | Help</p>
-<p>© 2026 Sandeep Kart</p>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
