@@ -1,144 +1,164 @@
-pipeline{
+pipeline {
     agent any
 
     tools {
-    maven 'Maven-3.6.1'
-    git 'git'
-}
-
-    environment{
-        PATH = "/opt/maven3/bin:$PATH"
-        SCANNER_HOME = tool 'sonar-scanner'
+        maven 'Maven-3.6.1'
     }
 
-    stages{
+    environment {
+        IMAGE_NAME = "sandeepgoudgandu/spring-boot-mongo:${BUILD_NUMBER}"
+    }
 
-        stage("Clean Workspace"){
-            steps{
+    stages {
+
+        stage('Clean Workspace') {
+            steps {
                 cleanWs()
             }
         }
 
-        stage("Git Checkout"){
-            steps{
-                git credentialsId: 'javahome2',
-                url: 'https://github.com/Sandeepgoudgandu/myweb.git'
+        stage('Git Checkout') {
+            steps {
+                git branch: 'master',
+                    credentialsId: 'javahome2',
+                    url: 'https://github.com/Sandeepgoudgandu/myweb.git'
             }
         }
-
-        stage("SonarQube Analysis"){
-            steps{
-                withSonarQubeEnv('sonar-server') {
-
-                    sh """
-                    mvn clean verify sonar:sonar \
-                    -Dsonar.projectKey=myweb \
-                    -Dsonar.projectName=myweb
-                    """
-                }
-            }
-        }
-
-        stage("Maven Build"){
-            steps{
-                sh "mvn clean package -DskipTests"
-            }
-        }
-
-        stage("OWASP Dependency Check"){
-            steps{
-                dependencyCheck additionalArguments: '--scan ./',
-                odcInstallation: 'DP-Check'
-
-                dependencyCheckPublisher pattern:
-                '**/dependency-check-report.xml'
-            }
-        }
-
-        stage('Upload War To Nexus'){
-            steps{
-
-                nexusArtifactUploader artifacts: [
-                    [
-                        artifactId: 'myweb',
-                        classifier: '',
-                        file: "target/myweb-8.2.0.war",
-                        type: 'war'
-                    ]
-                ],
-                credentialsId: 'nexus3',
-                groupId: 'in.javahome',
-                nexusUrl: '172.31.19.185:8081',
-                nexusVersion: 'nexus3',
-                protocol: 'http',
-                repository: 'sample-releases',
-                version: '8.2.0'
-            }
-        }
-
-        stage('Build Docker Image'){
-            steps{
-
-                sh 'docker build -t sandeepgoudgandu/spring-boot-mongo .'
-
-                sh 'docker build -t tomcat:${BUILD_NUMBER} .'
-            }
-        }
-
-        stage('Trivy File System Scan'){
-            steps{
-                sh 'trivy fs . > trivy-fs-report.txt'
-            }
-        }
-
-        stage('Trivy Docker Image Scan'){
-            steps{
-                sh 'trivy image tomcat:${BUILD_NUMBER} > trivy-image-report.txt'
-            }
-        }
-
-        stage('Deploy Container'){
-            steps{
-
+        
+         stage('Gitleaks Secret Scan') {
+            steps {
                 sh '''
-                docker rm -f vani || true
-                docker run -itd \
-                --name vani \
-                -p 9090:8080 \
-                tomcat:${BUILD_NUMBER}
+                gitleaks detect --source . --report-format json --report-path gitleaks-report.json || true
                 '''
             }
         }
 
-        stage('Push Docker Image'){
-            steps{
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonar-server') {
+                    sh '''
+                    mvn clean verify sonar:sonar \
+                    -Dsonar.projectKey=myweb \
+                    -Dsonar.projectName=myweb
+                    '''
+                }
+            }
+        }
 
+        stage('OWASP Dependency Check') {
+            steps {
+               dependencyCheck(
+    odcInstallation: 'DP-Check',
+    additionalArguments: '--scan . --noupdate'
+)
+            }
+        }
+
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+
+        stage('Upload WAR To Nexus') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: '172.31.3.129:8081',
+                    groupId: 'in.javahome',
+                    version: '8.2.0',
+                    repository: 'sample-releases',
+                    credentialsId: 'nexus3',
+                    artifacts: [[
+                        artifactId: 'myweb',
+                        classifier: '',
+                        file: 'target/myweb-8.2.0.war',
+                        type: 'war'
+                    ]]
+                )
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build -t $IMAGE_NAME .
+                docker tag $IMAGE_NAME sandeepgoudgandu/spring-boot-mongo:latest
+                '''
+            }
+        }
+
+        stage('Trivy File System Scan') {
+            steps {
+                sh '''
+                trivy fs . \
+                --severity HIGH,CRITICAL \
+                -o trivy-fs-report.txt
+                '''
+            }
+        }
+
+        stage('Trivy Docker Image Scan') {
+            steps {
+                sh '''
+                trivy image $IMAGE_NAME \
+                --severity HIGH,CRITICAL \
+                -o trivy-image-report.txt
+                '''
+            }
+        }
+
+        stage('Archive Security Reports') {
+            steps {
+                archiveArtifacts artifacts: '*.txt', fingerprint: true
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
                 withCredentials([
                     string(
-                        credentialsId: 'DOCKER_HUB_CREDENTIALS1',
-                        variable: 'DOCKER_HUB_CREDENTIALS'
+                        credentialsId: 'DOCKER_HUB_CREDENTIALS',
+                        variable: 'DOCKER_HUB_TOKEN'
                     )
                 ]) {
+                    sh '''
+                    echo "$DOCKER_HUB_TOKEN" | docker login -u sandeepgoudgandu --password-stdin
 
-                    sh """
-                    docker login -u sandeepgoudgandu \
-                    -p ${DOCKER_HUB_CREDENTIALS}
-                    """
-
-                    sh 'docker push sandeepgoudgandu/spring-boot-mongo'
+                    docker push $IMAGE_NAME
+                    docker push sandeepgoudgandu/spring-boot-mongo:latest
+                    '''
                 }
+            }
+        }
+
+        stage('Deploy Container') {
+            steps {
+                sh '''
+                docker rm -f myweb || true
+
+                docker run -d \
+                --name myweb \
+                -p 9090:8080 \
+                $IMAGE_NAME
+                '''
             }
         }
     }
 
-    post{
+    post {
 
-        success{
+        success {
             echo 'DevSecOps Pipeline Executed Successfully'
         }
 
-        failure{
-            echo 'Pipeline Failed'
+        failure {
+            echo 'DevSecOps Pipeline Failed'
+        }
+
+        always {
+            cleanWs()
         }
     }
 }
