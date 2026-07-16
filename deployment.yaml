@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mywebdeployment
-  namespace: gitops
+  name: spring-boot-mongo
   labels:
-    app: myweb
+    app: spring-boot-mongo
 spec:
-  replicas: 6
+  replicas: 2
   selector:
     matchLabels:
-      app: myweb
+      app: spring-boot-mongo
   template:
     metadata:
       labels:
-        app: myweb
+        app: spring-boot-mongo
     spec:
       containers:
-      - name: myweb
-        image: kammana/myweb:"$(version)"
+      - name: spring-boot-mongo
+        image: sandeepgoudgandu/spring-boot-mongo:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
