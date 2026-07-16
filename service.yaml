@@ -1,22 +1,13 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
-  name: mywebdeployment
-  namespace: gitops
-  labels:
-    app: myweb
+  name: spring-boot-mongo
 spec:
-  replicas: 6
   selector:
-    matchLabels:
-      app: myweb
-  template:
-    metadata:
-      labels:
-        app: myweb
-    spec:
-      containers:
-      - name: myweb
-        image: kammana/myweb:"$(version)"
-        ports:
-        - containerPort: 8080
+    app: spring-boot-mongo
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    nodePort: 30080
+  type: NodePort
