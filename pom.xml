@@ -81,12 +81,12 @@
 
         <snapshotRepository>
             <id>nexusRepo</id>
-            <url>http://15.252.145.19:8081/repository/maven-snapshots/</url>
+            <url>http://15.252.70.17:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
 
         <repository>
             <id>nexusRepo</id>
-            <url>http://15.252.145.19:8081/repository/sample-releases/</url>
+            <url>http://15.252.70.17:8081/repository/sample-releases/</url>
         </repository>
 
     </distributionManagement>
